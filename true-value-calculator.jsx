@@ -300,10 +300,52 @@ export default function App() {
           ))}
         </div>
 
-        {/* Footer */}
-        <div style={{ textAlign: "center", fontSize: 10, color: "#222", padding: "20px 0 40px", lineHeight: 1.7 }}>
-          Built with care in Switzerland
+        {/* Breakdown */}
+        {score > 0 && (
+          <div style={{ background: "#111", borderRadius: 12, border: "1px solid #1a1a1a", padding: "16px", marginBottom: 14 }}>
+            <div style={{ fontSize: 9, letterSpacing: 3, textTransform: "uppercase", color: "#333", marginBottom: 10 }}>Breakdown</div>
+            {categories.map(cat => {
+              const s = Math.round(catScore(cat, values) * 100);
+              return (
+                <div key={cat.id} style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 7 }}>
+                  <span style={{ fontSize: 12, width: 18 }}>{cat.emoji}</span>
+                  <div style={{ flex: 1, height: 3, background: "#1a1a1a", borderRadius: 99, overflow: "hidden" }}>
+                    <div style={{ height: "100%", width: `${s}%`, background: cat.color, borderRadius: 99, transition: "width 0.6s ease" }} />
+                  </div>
+                  <span style={{ fontFamily: "'DM Mono',monospace", fontSize: 10, color: s > 40 ? cat.color : "#333", width: 24, textAlign: "right" }}>{s}%</span>
+                  <span style={{ fontSize: 10, color: "#2a2a2a", width: 72 }}>{cat.label}</span>
+                </div>
+              );
+            })}
+            <div style={{ marginTop: 12, paddingTop: 12, borderTop: "1px solid #1a1a1a",
+              fontSize: 12, color: "#333", fontFamily: "'Playfair Display',serif", fontStyle: "italic", lineHeight: 1.7 }}>
+              "The market knows the price of everything and the value of nothing."
+              <span style={{ display: "block", fontSize: 10, fontStyle: "normal",
+                fontFamily: "'DM Sans',sans-serif", color: "#222", marginTop: 2 }}>— Oscar Wilde</span>
+            </div>
+          </div>
+        )}
+
+        {/* Sources */}
+        <div style={{ background: "#0c0c0c", borderRadius: 10, border: "1px solid #161616", padding: "12px 14px" }}>
+          <div style={{ fontSize: 9, letterSpacing: 2.5, textTransform: "uppercase", color: "#2a2a2a", marginBottom: 8 }}>Research sources</div>
+          {[
+            ["🇨🇭", "Freiwilligen-Monitor Schweiz 2025 (SGG/Lamprecht & Stamm) — CHF 13.90–18.80/hr volunteer replacement value"],
+            ["🇨🇭", "BFS SAKE 2024 — 590M volunteer hours, 376M informal care hours per year in Switzerland"],
+            ["🌍", "Circular Economy Journal 2024 — second-hand clothing: up to 42% lower CO₂ per use vs. new"],
+            ["🇺🇸", "CDC 2024 — physical inactivity linked to $117B/yr in US healthcare costs"],
+            ["🏥", "JAMA / Baptist Health 2023 — regular exercise saves $500–$2,500/yr per person in medical costs"],
+            ["🛋️", "Carousell/Vaayu 2022 — used sofa saves ~131 kg CO₂; used smartphone ~47 kg"],
+            ["👩‍👧", "ILO 2018 — 16.4B hrs unpaid care daily = 9% of global GDP if valued at minimum wage"],
+            ["❤️", "Holt-Lunstad et al., PLOS Medicine 2010 — strong social ties = 50% better survival odds"],
+          ].map(([icon, text], i) => (
+            <div key={i} style={{ display: "flex", gap: 6, fontSize: 10, color: "#2e2e2e",
+              lineHeight: 1.6, marginBottom: 3, paddingLeft: 6, borderLeft: "1px solid #1e1e1e" }}>
+              <span style={{ opacity: 0.6 }}>{icon}</span><span>{text}</span>
+            </div>
+          ))}
         </div>
+
       </div>
     </div>
   );
