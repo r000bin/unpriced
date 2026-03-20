@@ -326,19 +326,22 @@ function App() {
                     value={val}
                     onChange={e => setValues(v => ({ ...v, [act.id]: parseFloat(e.target.value) }))}
                     style={{ width: "100%", marginTop: 6, accentColor: activeCat.color, cursor: "pointer", height: 22 }} />
-                  <div style={{ position: "relative", height: 16, marginTop: 2 }}>
-                    <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12, color: "#666" }}>
-                      <span>0</span><span style={{ color: "#777" }}>{act.unit}</span><span>{act.max}</span>
+                  {act.benchmarks ? (
+                    <div style={{ display: "flex", justifyContent: "space-between", fontSize: 11, marginTop: 2, color: "#555" }}>
+                      <span style={{ color: "#555" }}>0</span>
+                      {act.benchmarks.map((bm, bi) => (
+                        <span key={bi} style={{ color: val >= bm.v ? activeCat.color + "bb" : "#555",
+                          transition: "color 0.3s", textAlign: "center" }}>
+                          {bm.v} · {bm.label}
+                        </span>
+                      ))}
+                      <span style={{ color: "#555" }}>{act.max}</span>
                     </div>
-                    {act.benchmarks && act.benchmarks.map((bm, bi) => (
-                      <span key={bi} style={{ position: "absolute", left: `${(bm.v / act.max) * 100}%`,
-                        transform: "translateX(-50%)", top: 0,
-                        fontSize: 10, color: val >= bm.v ? activeCat.color + "bb" : "#555",
-                        whiteSpace: "nowrap", transition: "color 0.3s" }}>
-                        {bm.label}
-                      </span>
-                    ))}
-                  </div>
+                  ) : (
+                    <div style={{ display: "flex", justifyContent: "space-between", fontSize: 11, marginTop: 2, color: "#555" }}>
+                      <span>0</span><span>{act.unit}</span><span>{act.max}</span>
+                    </div>
+                  )}
                 </div>
               );
             })}
