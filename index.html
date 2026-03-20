@@ -35,14 +35,18 @@ const categories = [
     research: "Physical inactivity costs $117B/yr in healthcare (CDC). Regularly active people save $500–$2,500/yr in medical costs (JAMA 2023, Baptist Health). High-fit adults have 40% lower average healthcare costs after 65 (JACC).",
     activities: [
       { id: "exercise", label: "Exercise / Movement", unit: "hrs/week", max: 20, tip: "Running, yoga, cycling, hiking...",
+        benchmarks: [{ v: 2.5, label: "WHO min" }, { v: 5, label: "WHO optimal" }, { v: 10, label: "Athlete" }],
         monetaryFn: v => Math.round(v * EXERCISE_SAVING_PER_WEEK_HOUR * 52),
         monetaryLabel: v => `≈ CHF ${Math.round(v * EXERCISE_SAVING_PER_WEEK_HOUR * 52).toLocaleString("de-CH")}/yr healthcare savings avoided` },
       { id: "sleep", label: "Quality Sleep", unit: "hrs/night avg", max: 10, tip: "7–9h optimal — poor sleep costs ~$411B/yr (RAND)",
+        benchmarks: [{ v: 6, label: "Minimum" }, { v: 7.5, label: "Recommended" }, { v: 9, label: "Optimal" }],
         monetaryFn: null, monetaryLabel: () => "Poor sleep costs ~$411B/yr in lost productivity (RAND Europe)" },
       { id: "cooking", label: "Home cooking", unit: "meals/week", max: 21, tip: "Fresh, whole-food meals vs. processed / takeaway",
+        benchmarks: [{ v: 7, label: "1×/day" }, { v: 14, label: "2×/day" }, { v: 21, label: "All meals" }],
         monetaryFn: v => Math.round(v * 8 * 52),
         monetaryLabel: v => `≈ CHF ${Math.round(v * 8 * 52).toLocaleString("de-CH")}/yr saved vs. eating out` },
       { id: "medical", label: "Preventive care", unit: "appts/year", max: 12, tip: "Checkups, therapy, physio, dentist...",
+        benchmarks: [{ v: 2, label: "Basics" }, { v: 4, label: "Good" }, { v: 8, label: "Thorough" }],
         monetaryFn: null, monetaryLabel: () => "Prevention saves 10–100× treatment costs (WHO)" },
     ],
   },
@@ -52,13 +56,17 @@ const categories = [
     research: "Mindfulness reduces anxiety & depression risk by 30–50% (Lancet Psychiatry 2021). Burnout costs CHF 10k–50k per episode in lost productivity (SECO). Lifelong learning adds years of cognitive health (Lancet Commission on Dementia 2020).",
     activities: [
       { id: "meditation", label: "Mindfulness / Meditation", unit: "min/day", max: 60, tip: "Presence, breathing, journaling",
+        benchmarks: [{ v: 10, label: "Starter" }, { v: 20, label: "Recommended" }, { v: 45, label: "Deep practice" }],
         monetaryFn: null, monetaryLabel: () => "Reduces anxiety risk by up to 30% (Lancet Psychiatry 2021)" },
       { id: "learning", label: "Learning something new", unit: "hrs/week", max: 15, tip: "Books, courses, languages, skills",
+        benchmarks: [{ v: 2, label: "Casual" }, { v: 5, label: "Committed" }, { v: 10, label: "Serious" }],
         monetaryFn: v => Math.round(v * 50 * 52),
         monetaryLabel: v => `≈ CHF ${Math.round(v * 50 * 52).toLocaleString("de-CH")}/yr in skill value (avg course cost proxy)` },
       { id: "creativity", label: "Creative expression", unit: "hrs/week", max: 20, tip: "Art, music, writing, crafts, gardening",
+        benchmarks: [{ v: 2, label: "Hobby" }, { v: 5, label: "Regular" }, { v: 10, label: "Dedicated" }],
         monetaryFn: null, monetaryLabel: () => "Proven to reduce cortisol & boost life satisfaction (APA)" },
       { id: "therapy", label: "Therapy / Self-reflection", unit: "sessions/month", max: 8, tip: "Intentional inner work",
+        benchmarks: [{ v: 1, label: "Maintenance" }, { v: 2, label: "Regular" }, { v: 4, label: "Intensive" }],
         monetaryFn: null, monetaryLabel: () => "Prevents burnout worth CHF 10k–50k/episode (SECO)" },
     ],
   },
@@ -68,15 +76,19 @@ const categories = [
     research: "Switzerland leads Europe in volunteering: 590M hours/yr (Freiwilligen-Monitor 2025, SGG). Replacement value: CHF 13.90–18.80/hr (SRF/SGG 2025). BFS 2024: 376M hrs informal care given — 200M hrs just for children.",
     activities: [
       { id: "volunteer", label: "Freiwilligen-Arbeit (Verein etc.)", unit: "hrs/week", max: 20, tip: "Feuerwehr, Elternrat, charity, sport...",
+        benchmarks: [{ v: 1, label: "CH avg" }, { v: 3, label: "Active" }, { v: 8, label: "Dedicated" }],
         monetaryFn: v => Math.round(v * CHF_PER_VOLUNTEER_HOUR * 52),
         monetaryLabel: v => `≈ CHF ${Math.round(v * CHF_PER_VOLUNTEER_HOUR * 52).toLocaleString("de-CH")}/yr replacement value (BFS/SGG 2025)` },
       { id: "informal_help", label: "Informal help / Nachbarschaft", unit: "hrs/week", max: 20, tip: "Neighbors, childcare, elder care",
+        benchmarks: [{ v: 1, label: "Occasional" }, { v: 3, label: "Regular" }, { v: 7, label: "Heavy" }],
         monetaryFn: v => Math.round(v * CHF_PER_VOLUNTEER_HOUR * 52),
         monetaryLabel: v => `≈ CHF ${Math.round(v * CHF_PER_VOLUNTEER_HOUR * 52).toLocaleString("de-CH")}/yr (CH: 376M such hrs given in 2024)` },
       { id: "mentoring", label: "Mentoring / Teaching", unit: "hrs/week", max: 10, tip: "Sharing skills, coaching, tutoring",
+        benchmarks: [{ v: 1, label: "Casual" }, { v: 3, label: "Regular" }, { v: 5, label: "Serious" }],
         monetaryFn: v => Math.round(v * 80 * 52),
         monetaryLabel: v => `≈ CHF ${Math.round(v * 80 * 52).toLocaleString("de-CH")}/yr (market rate CHF 80+/hr)` },
       { id: "community_org", label: "Community / Gemeinde work", unit: "hrs/month", max: 30, tip: "Local politics, associations, initiatives",
+        benchmarks: [{ v: 4, label: "Occasional" }, { v: 8, label: "Active" }, { v: 16, label: "Board" }],
         monetaryFn: v => Math.round(v * CHF_PER_VOLUNTEER_HOUR * 12),
         monetaryLabel: v => `≈ CHF ${Math.round(v * CHF_PER_VOLUNTEER_HOUR * 12).toLocaleString("de-CH")}/yr` },
     ],
@@ -87,14 +99,18 @@ const categories = [
     research: "Second-hand clothing: up to 42% lower CO2 per use vs. new (Circular Economy Journal 2024). A used sofa saves ~131 kg CO2 (Carousell/Vaayu 2022). Extending garment life by 9 months cuts carbon footprint by 20–30% (EEA 2022). Switzerland CO2 levy: CHF 130/tonne.",
     activities: [
       { id: "secondhand", label: "Buying second-hand clothing", unit: "items/month", max: 20, tip: "Brocki, Vinted, Ricardo, swaps...",
+        benchmarks: [{ v: 2, label: "Occasional" }, { v: 5, label: "Regular" }, { v: 10, label: "Committed" }],
         monetaryFn: v => Math.round(v * 12 * CO2_PER_SECONDHAND_ITEM_KG),
         monetaryLabel: v => `≈ ${Math.round(v * 12 * CO2_PER_SECONDHAND_ITEM_KG)} kg CO₂ avoided/yr (Circular Economy Journal 2024)` },
       { id: "gardening", label: "Gardening / Native plants", unit: "hrs/week", max: 15, tip: "Wildflowers, food, compost, rewilding",
+        benchmarks: [{ v: 2, label: "Casual" }, { v: 5, label: "Hobby" }, { v: 10, label: "Serious" }],
         monetaryFn: null, monetaryLabel: () => "Biodiversity + food + wellbeing — value beyond metrics" },
       { id: "repair", label: "Repairing instead of buying", unit: "items/month", max: 10, tip: "Fixing clothes, electronics, bikes",
+        benchmarks: [{ v: 1, label: "Occasional" }, { v: 3, label: "Handy" }, { v: 6, label: "Dedicated" }],
         monetaryFn: v => Math.round(v * 50 * 12),
         monetaryLabel: v => `≈ CHF ${Math.round(v * 50 * 12).toLocaleString("de-CH")}/yr production cost avoided` },
       { id: "lowimpact", label: "Low-impact daily choices", unit: "choices/day", max: 10, tip: "Bike instead of car, plant-based meals...",
+        benchmarks: [{ v: 2, label: "Starting" }, { v: 4, label: "Conscious" }, { v: 7, label: "Committed" }],
         monetaryFn: null, monetaryLabel: () => "1 plant meal = ~1.5 kg CO₂ saved vs. beef meal (PLOS ONE)" },
     ],
   },
@@ -104,12 +120,16 @@ const categories = [
     research: "Strong social ties = 50% better survival odds — equivalent to quitting smoking (Holt-Lunstad et al. 2010, PLOS Medicine). Loneliness costs EU €40B/yr (EU Commission 2023). Each act of kindness measurably boosts giver wellbeing (PNAS 2022).",
     activities: [
       { id: "deepconv", label: "Deep conversations", unit: "hrs/week", max: 15, tip: "Real talk with people you trust",
+        benchmarks: [{ v: 1, label: "Minimal" }, { v: 3, label: "Healthy" }, { v: 7, label: "Rich" }],
         monetaryFn: null, monetaryLabel: () => "Social bonds = 50% better survival odds (Holt-Lunstad 2010)" },
       { id: "friendship", label: "Nurturing friendships", unit: "meetups/week", max: 14, tip: "Showing up for others",
+        benchmarks: [{ v: 1, label: "Occasional" }, { v: 3, label: "Social" }, { v: 7, label: "Very social" }],
         monetaryFn: null, monetaryLabel: () => "Loneliness costs ~$6,700/yr per isolated person (CIGNA)" },
       { id: "acts_kindness", label: "Acts of kindness", unit: "per week", max: 20, tip: "Small gestures that ripple outward",
+        benchmarks: [{ v: 3, label: "Natural" }, { v: 7, label: "Intentional" }, { v: 15, label: "Generous" }],
         monetaryFn: null, monetaryLabel: () => "Measurably boosts giver wellbeing (PNAS 2022)" },
       { id: "caregiving", label: "Caregiving (children/elders)", unit: "hrs/week", max: 40, tip: "Unpaid care work — the backbone of society",
+        benchmarks: [{ v: 5, label: "Light" }, { v: 15, label: "Part-time" }, { v: 30, label: "Full-time" }],
         monetaryFn: v => Math.round(v * CHF_PER_VOLUNTEER_HOUR * 52),
         monetaryLabel: v => `≈ CHF ${Math.round(v * CHF_PER_VOLUNTEER_HOUR * 52).toLocaleString("de-CH")}/yr (ILO: unpaid care = 9% global GDP)` },
     ],
@@ -292,17 +312,32 @@ function App() {
                       {val > 0 ? val : "—"}
                     </div>
                   </div>
-                  <div style={{ height: 5, background: "#1a1a1a", borderRadius: 99, overflow: "hidden" }}>
-                    <div style={{ height: "100%", width: `${pct}%`, borderRadius: 99,
+                  <div style={{ position: "relative", height: 5, background: "#1a1a1a", borderRadius: 99 }}>
+                    <div style={{ position: "absolute", top: 0, left: 0, height: "100%", width: `${pct}%`, borderRadius: 99,
                       background: `linear-gradient(90deg, ${activeCat.color}55, ${activeCat.color})`,
                       transition: "width 0.4s cubic-bezier(.4,0,.2,1)" }} />
+                    {act.benchmarks && act.benchmarks.map((bm, bi) => (
+                      <div key={bi} style={{ position: "absolute", left: `${(bm.v / act.max) * 100}%`, top: -2,
+                        width: 1, height: 9, background: val >= bm.v ? activeCat.color + "88" : "#444",
+                        transition: "background 0.3s" }} />
+                    ))}
                   </div>
                   <input type="range" min={0} max={act.max} step={act.max > 10 ? 1 : 0.5}
                     value={val}
                     onChange={e => setValues(v => ({ ...v, [act.id]: parseFloat(e.target.value) }))}
                     style={{ width: "100%", marginTop: 6, accentColor: activeCat.color, cursor: "pointer", height: 22 }} />
-                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12, color: "#666" }}>
-                    <span>0</span><span style={{ color: "#777" }}>{act.unit}</span><span>{act.max}</span>
+                  <div style={{ position: "relative", height: 16, marginTop: 2 }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12, color: "#666" }}>
+                      <span>0</span><span style={{ color: "#777" }}>{act.unit}</span><span>{act.max}</span>
+                    </div>
+                    {act.benchmarks && act.benchmarks.map((bm, bi) => (
+                      <span key={bi} style={{ position: "absolute", left: `${(bm.v / act.max) * 100}%`,
+                        transform: "translateX(-50%)", top: 0,
+                        fontSize: 10, color: val >= bm.v ? activeCat.color + "bb" : "#555",
+                        whiteSpace: "nowrap", transition: "color 0.3s" }}>
+                        {bm.label}
+                      </span>
+                    ))}
                   </div>
                 </div>
               );
