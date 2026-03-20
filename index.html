@@ -273,7 +273,7 @@ function App() {
           <div style={{ padding: "14px 18px 20px", display: "flex", flexDirection: "column", gap: 22 }}>
             {activeCat.activities.map(act => {
               const val = values[act.id] || 0;
-              const pct = Math.min(100, Math.round((val / (act.max * 0.6)) * 100));
+              const pct = Math.round((val / act.max) * 100);
               return (
                 <div key={act.id}>
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 6 }}>
