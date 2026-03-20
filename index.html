@@ -8,8 +8,9 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body { background: #0e0e0e; -webkit-font-smoothing: antialiased; }
-    input[type="range"] { -webkit-appearance: none; appearance: none; height: 4px; background: transparent; }
-    input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; height: 14px; width: 14px; border-radius: 50%; cursor: pointer; }
+    input[type="range"] { -webkit-appearance: none; appearance: none; height: 6px; background: transparent; }
+    input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; height: 22px; width: 22px; border-radius: 50%; cursor: pointer; }
+    input[type="range"]::-moz-range-thumb { height: 22px; width: 22px; border-radius: 50%; cursor: pointer; border: none; }
   </style>
 </head>
 <body>
@@ -166,131 +167,132 @@ function App() {
   const activeCat = categories.find(c => c.id === activeTab);
 
   return (
-    <div style={{ minHeight: "100vh", background: "#0e0e0e", color: "#e8e8e8", fontFamily: "'DM Sans', sans-serif", paddingBottom: 60 }}>
+    <div style={{ minHeight: "100vh", background: "#0e0e0e", color: "#e8e8e8", fontFamily: "'DM Sans', sans-serif", fontSize: 16, paddingBottom: 80 }}>
       <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
 
-      <div style={{ padding: "36px 22px 0", maxWidth: 540, margin: "0 auto", textAlign: "center" }}>
-        <div style={{ fontSize: 10, letterSpacing: 4, textTransform: "uppercase", color: "#444", marginBottom: 10 }}>True Value Calculator</div>
-        <h1 style={{ fontSize: 28, fontFamily: "'Playfair Display', serif", fontWeight: 700, lineHeight: 1.25, margin: "0 0 8px",
+      <div style={{ padding: "44px 20px 0", maxWidth: 600, margin: "0 auto", textAlign: "center" }}>
+        <div style={{ fontSize: 12, letterSpacing: 4, textTransform: "uppercase", color: "#444", marginBottom: 12 }}>True Value Calculator</div>
+        <h1 style={{ fontSize: 32, fontFamily: "'Playfair Display', serif", fontWeight: 700, lineHeight: 1.25, margin: "0 0 10px",
           background: "linear-gradient(130deg, #e8e8e8 0%, #777 100%)",
           WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
           Your life's work<br /><em style={{ fontStyle: "italic" }}>beyond income</em>
         </h1>
-        <p style={{ color: "#444", fontSize: 12, lineHeight: 1.7, maxWidth: 340, margin: "0 auto" }}>
+        <p style={{ color: "#444", fontSize: 14, lineHeight: 1.7, maxWidth: 380, margin: "0 auto" }}>
           Research-backed estimates of the real value you create — for yourself, your community &amp; the planet.
         </p>
       </div>
 
-      <div style={{ maxWidth: 540, margin: "0 auto", padding: "0 22px" }}>
+      <div style={{ maxWidth: 600, margin: "0 auto", padding: "0 16px" }}>
 
         {/* Big ring */}
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8, padding: "24px 0 16px" }}>
-          <div style={{ position: "relative", width: 150, height: 150 }}>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 10, padding: "28px 0 20px" }}>
+          <div style={{ position: "relative", width: 180, height: 180 }}>
             {(() => {
-              const r = 60, circ = 2 * Math.PI * r, dash = (score / 100) * circ;
+              const r = 72, circ = 2 * Math.PI * r, dash = (score / 100) * circ;
               return (
-                <svg width="150" height="150" viewBox="0 0 150 150">
-                  <circle cx="75" cy="75" r={r} fill="none" stroke="#1a1a1a" strokeWidth="11" />
-                  <circle cx="75" cy="75" r={r} fill="none" stroke={verdict.color} strokeWidth="11"
-                    strokeDasharray={`${dash} ${circ}`} strokeLinecap="round" transform="rotate(-90 75 75)"
+                <svg width="180" height="180" viewBox="0 0 180 180">
+                  <circle cx="90" cy="90" r={r} fill="none" stroke="#1a1a1a" strokeWidth="13" />
+                  <circle cx="90" cy="90" r={r} fill="none" stroke={verdict.color} strokeWidth="13"
+                    strokeDasharray={`${dash} ${circ}`} strokeLinecap="round" transform="rotate(-90 90 90)"
                     style={{ transition: "stroke-dasharray 1s cubic-bezier(.4,0,.2,1)" }} />
                 </svg>
               );
             })()}
             <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
-              <span style={{ fontSize: 38, fontWeight: 800, color: verdict.color, fontFamily: "'DM Mono',monospace", lineHeight: 1 }}>{score}</span>
-              <span style={{ fontSize: 10, color: "#444", letterSpacing: 2, textTransform: "uppercase" }}>/100</span>
+              <span style={{ fontSize: 46, fontWeight: 800, color: verdict.color, fontFamily: "'DM Mono',monospace", lineHeight: 1 }}>{score}</span>
+              <span style={{ fontSize: 12, color: "#444", letterSpacing: 2, textTransform: "uppercase" }}>/100</span>
             </div>
           </div>
           <div style={{ textAlign: "center" }}>
-            <div style={{ fontSize: 17, fontWeight: 700, color: verdict.color, fontFamily: "'Playfair Display',serif" }}>{verdict.label}</div>
-            <div style={{ fontSize: 12, color: "#555", marginTop: 3 }}>{verdict.msg}</div>
+            <div style={{ fontSize: 20, fontWeight: 700, color: verdict.color, fontFamily: "'Playfair Display',serif" }}>{verdict.label}</div>
+            <div style={{ fontSize: 14, color: "#555", marginTop: 4 }}>{verdict.msg}</div>
           </div>
         </div>
 
         {/* Monetary banner */}
         {monetary > 0 && (
-          <div style={{ background: "#111", border: "1px solid #3dba6f2a", borderRadius: 12,
-            padding: "12px 16px", marginBottom: 14, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <div style={{ background: "#111", border: "1px solid #3dba6f2a", borderRadius: 14,
+            padding: "16px 18px", marginBottom: 16, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
             <div>
-              <div style={{ fontSize: 9, letterSpacing: 3, textTransform: "uppercase", color: "#3dba6f66", marginBottom: 3 }}>Estimated annual real value</div>
-              <div style={{ fontSize: 22, fontFamily: "'DM Mono',monospace", color: "#3dba6f", fontWeight: 700 }}>
+              <div style={{ fontSize: 11, letterSpacing: 3, textTransform: "uppercase", color: "#3dba6f66", marginBottom: 4 }}>Estimated annual real value</div>
+              <div style={{ fontSize: 26, fontFamily: "'DM Mono',monospace", color: "#3dba6f", fontWeight: 700 }}>
                 CHF {monetary.toLocaleString("de-CH")}
               </div>
             </div>
-            <div style={{ fontSize: 10, color: "#333", maxWidth: 130, textAlign: "right", lineHeight: 1.5 }}>
+            <div style={{ fontSize: 12, color: "#333", maxWidth: 140, textAlign: "right", lineHeight: 1.5 }}>
               Swiss replacement costs &amp; research benchmarks
             </div>
           </div>
         )}
 
         {/* Mini category rings */}
-        <div style={{ display: "flex", gap: 6, marginBottom: 16, background: "#111", borderRadius: 14, padding: "10px 8px" }}>
+        <div style={{ display: "flex", gap: 4, marginBottom: 18, background: "#111", borderRadius: 16, padding: "12px 6px",
+          overflowX: "auto", WebkitOverflowScrolling: "touch" }}>
           {categories.map(cat => {
             const s = Math.round(catScore(cat, values) * 100);
             return (
               <button key={cat.id} onClick={() => setActiveTab(cat.id)}
-                style={{ flex: 1, background: "none", border: "none", cursor: "pointer",
-                  display: "flex", flexDirection: "column", alignItems: "center", gap: 3, padding: "4px 2px",
-                  borderRadius: 8, outline: activeTab === cat.id ? `2px solid ${cat.color}` : "2px solid transparent",
-                  transition: "outline 0.2s" }}>
-                <Ring pct={s} color={cat.color} size={50} />
-                <span style={{ fontSize: 14, lineHeight: 1 }}>{cat.emoji}</span>
+                style={{ flex: "1 0 60px", background: "none", border: "none", cursor: "pointer",
+                  display: "flex", flexDirection: "column", alignItems: "center", gap: 4, padding: "6px 4px",
+                  borderRadius: 10, outline: activeTab === cat.id ? `2px solid ${cat.color}` : "2px solid transparent",
+                  transition: "outline 0.2s", minWidth: 0 }}>
+                <Ring pct={s} color={cat.color} size={54} />
+                <span style={{ fontSize: 16, lineHeight: 1 }}>{cat.emoji}</span>
               </button>
             );
           })}
         </div>
 
         {/* Active category */}
-        <div style={{ background: "#111", borderRadius: 16, border: `1px solid ${activeCat.color}1a`, marginBottom: 14, overflow: "hidden" }}>
-          <div style={{ padding: "12px 16px 10px", borderBottom: "1px solid #1a1a1a",
+        <div style={{ background: "#111", borderRadius: 18, border: `1px solid ${activeCat.color}1a`, marginBottom: 16, overflow: "hidden" }}>
+          <div style={{ padding: "14px 18px 12px", borderBottom: "1px solid #1a1a1a",
             display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-              <span style={{ fontSize: 18 }}>{activeCat.emoji}</span>
+            <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+              <span style={{ fontSize: 22 }}>{activeCat.emoji}</span>
               <div>
-                <div style={{ fontWeight: 600, color: activeCat.color, fontSize: 13 }}>{activeCat.label}</div>
-                <div style={{ fontSize: 10, color: "#3a3a3a" }}>{activeCat.description}</div>
+                <div style={{ fontWeight: 600, color: activeCat.color, fontSize: 16 }}>{activeCat.label}</div>
+                <div style={{ fontSize: 12, color: "#3a3a3a" }}>{activeCat.description}</div>
               </div>
             </div>
             <button onClick={() => setShowResearch(r => r === activeCat.id ? null : activeCat.id)}
-              style={{ background: "none", border: `1px solid ${activeCat.color}44`, borderRadius: 6,
-                padding: "3px 8px", fontSize: 9, color: activeCat.color + "cc", cursor: "pointer",
+              style={{ background: "none", border: `1px solid ${activeCat.color}44`, borderRadius: 8,
+                padding: "6px 12px", fontSize: 11, color: activeCat.color + "cc", cursor: "pointer",
                 letterSpacing: 1.5, textTransform: "uppercase" }}>
               {showResearch === activeCat.id ? "Hide" : "Sources"}
             </button>
           </div>
 
           {showResearch === activeCat.id && (
-            <div style={{ padding: "10px 16px", background: `${activeCat.color}06`,
-              borderBottom: "1px solid #1a1a1a", fontSize: 11, color: "#666",
+            <div style={{ padding: "12px 18px", background: `${activeCat.color}06`,
+              borderBottom: "1px solid #1a1a1a", fontSize: 13, color: "#666",
               lineHeight: 1.7, fontStyle: "italic" }}>
               {activeCat.research}
             </div>
           )}
 
-          <div style={{ padding: "12px 16px 16px", display: "flex", flexDirection: "column", gap: 16 }}>
+          <div style={{ padding: "14px 18px 20px", display: "flex", flexDirection: "column", gap: 22 }}>
             {activeCat.activities.map(act => {
               const val = values[act.id] || 0;
               const pct = Math.min(100, Math.round((val / (act.max * 0.6)) * 100));
               return (
                 <div key={act.id}>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 4 }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 6 }}>
                     <div style={{ flex: 1, paddingRight: 8 }}>
-                      <div style={{ fontSize: 12, fontWeight: 500, color: "#ccc" }}>{act.label}</div>
-                      <div style={{ fontSize: 10, color: "#2f2f2f", marginTop: 1 }}>{act.tip}</div>
+                      <div style={{ fontSize: 15, fontWeight: 500, color: "#ccc" }}>{act.label}</div>
+                      <div style={{ fontSize: 12, color: "#2f2f2f", marginTop: 2 }}>{act.tip}</div>
                       {val > 0 && (
-                        <div style={{ fontSize: 10, color: act.monetaryFn ? activeCat.color : "#3a3a3a",
-                          marginTop: 3, opacity: act.monetaryFn ? 0.85 : 0.6 }}>
+                        <div style={{ fontSize: 12, color: act.monetaryFn ? activeCat.color : "#3a3a3a",
+                          marginTop: 4, opacity: act.monetaryFn ? 0.85 : 0.6 }}>
                           {act.monetaryFn ? "≈ " : ""}{act.monetaryLabel(val)}
                         </div>
                       )}
                     </div>
-                    <div style={{ fontFamily: "'DM Mono',monospace", fontSize: 11,
-                      color: pct > 0 ? activeCat.color : "#2a2a2a", minWidth: 30, textAlign: "right" }}>
+                    <div style={{ fontFamily: "'DM Mono',monospace", fontSize: 14,
+                      color: pct > 0 ? activeCat.color : "#2a2a2a", minWidth: 36, textAlign: "right" }}>
                       {val > 0 ? val : "—"}
                     </div>
                   </div>
-                  <div style={{ height: 4, background: "#1a1a1a", borderRadius: 99, overflow: "hidden" }}>
+                  <div style={{ height: 5, background: "#1a1a1a", borderRadius: 99, overflow: "hidden" }}>
                     <div style={{ height: "100%", width: `${pct}%`, borderRadius: 99,
                       background: `linear-gradient(90deg, ${activeCat.color}55, ${activeCat.color})`,
                       transition: "width 0.4s cubic-bezier(.4,0,.2,1)" }} />
@@ -298,8 +300,8 @@ function App() {
                   <input type="range" min={0} max={act.max} step={act.max > 10 ? 1 : 0.5}
                     value={val}
                     onChange={e => setValues(v => ({ ...v, [act.id]: parseFloat(e.target.value) }))}
-                    style={{ width: "100%", marginTop: 4, accentColor: activeCat.color, cursor: "pointer" }} />
-                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: 9, color: "#222" }}>
+                    style={{ width: "100%", marginTop: 6, accentColor: activeCat.color, cursor: "pointer", height: 22 }} />
+                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: 11, color: "#222" }}>
                     <span>0</span><span style={{ color: "#2a2a2a" }}>{act.unit}</span><span>{act.max}</span>
                   </div>
                 </div>
@@ -309,10 +311,10 @@ function App() {
         </div>
 
         {/* Nav pills */}
-        <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 18 }}>
+        <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 20 }}>
           {categories.map(cat => (
             <button key={cat.id} onClick={() => setActiveTab(cat.id)}
-              style={{ padding: "6px 12px", borderRadius: 99, fontSize: 11, fontWeight: 500,
+              style={{ padding: "8px 14px", borderRadius: 99, fontSize: 13, fontWeight: 500,
                 border: `1px solid ${activeTab === cat.id ? cat.color : "#1e1e1e"}`,
                 background: activeTab === cat.id ? `${cat.color}14` : "transparent",
                 color: activeTab === cat.id ? cat.color : "#3a3a3a",
@@ -324,33 +326,33 @@ function App() {
 
         {/* Breakdown */}
         {score > 0 && (
-          <div style={{ background: "#111", borderRadius: 12, border: "1px solid #1a1a1a", padding: "16px", marginBottom: 14 }}>
-            <div style={{ fontSize: 9, letterSpacing: 3, textTransform: "uppercase", color: "#333", marginBottom: 10 }}>Breakdown</div>
+          <div style={{ background: "#111", borderRadius: 14, border: "1px solid #1a1a1a", padding: "18px", marginBottom: 16 }}>
+            <div style={{ fontSize: 11, letterSpacing: 3, textTransform: "uppercase", color: "#333", marginBottom: 12 }}>Breakdown</div>
             {categories.map(cat => {
               const s = Math.round(catScore(cat, values) * 100);
               return (
-                <div key={cat.id} style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 7 }}>
-                  <span style={{ fontSize: 12, width: 18 }}>{cat.emoji}</span>
-                  <div style={{ flex: 1, height: 3, background: "#1a1a1a", borderRadius: 99, overflow: "hidden" }}>
+                <div key={cat.id} style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
+                  <span style={{ fontSize: 16, width: 22 }}>{cat.emoji}</span>
+                  <div style={{ flex: 1, height: 4, background: "#1a1a1a", borderRadius: 99, overflow: "hidden" }}>
                     <div style={{ height: "100%", width: `${s}%`, background: cat.color, borderRadius: 99, transition: "width 0.6s ease" }} />
                   </div>
-                  <span style={{ fontFamily: "'DM Mono',monospace", fontSize: 10, color: s > 40 ? cat.color : "#333", width: 24, textAlign: "right" }}>{s}%</span>
-                  <span style={{ fontSize: 10, color: "#2a2a2a", width: 72 }}>{cat.label}</span>
+                  <span style={{ fontFamily: "'DM Mono',monospace", fontSize: 13, color: s > 40 ? cat.color : "#333", width: 32, textAlign: "right" }}>{s}%</span>
+                  <span style={{ fontSize: 12, color: "#2a2a2a", width: 90 }}>{cat.label}</span>
                 </div>
               );
             })}
-            <div style={{ marginTop: 12, paddingTop: 12, borderTop: "1px solid #1a1a1a",
-              fontSize: 12, color: "#333", fontFamily: "'Playfair Display',serif", fontStyle: "italic", lineHeight: 1.7 }}>
+            <div style={{ marginTop: 14, paddingTop: 14, borderTop: "1px solid #1a1a1a",
+              fontSize: 14, color: "#333", fontFamily: "'Playfair Display',serif", fontStyle: "italic", lineHeight: 1.7 }}>
               "The market knows the price of everything and the value of nothing."
-              <span style={{ display: "block", fontSize: 10, fontStyle: "normal",
-                fontFamily: "'DM Sans',sans-serif", color: "#222", marginTop: 2 }}>— Oscar Wilde</span>
+              <span style={{ display: "block", fontSize: 12, fontStyle: "normal",
+                fontFamily: "'DM Sans',sans-serif", color: "#222", marginTop: 3 }}>— Oscar Wilde</span>
             </div>
           </div>
         )}
 
         {/* Sources */}
-        <div style={{ background: "#0c0c0c", borderRadius: 10, border: "1px solid #161616", padding: "12px 14px" }}>
-          <div style={{ fontSize: 9, letterSpacing: 2.5, textTransform: "uppercase", color: "#2a2a2a", marginBottom: 8 }}>Research sources</div>
+        <div style={{ background: "#0c0c0c", borderRadius: 12, border: "1px solid #161616", padding: "16px 16px" }}>
+          <div style={{ fontSize: 11, letterSpacing: 2.5, textTransform: "uppercase", color: "#2a2a2a", marginBottom: 10 }}>Research sources</div>
           {[
             ["🇨🇭", "Freiwilligen-Monitor Schweiz 2025 (SGG/Lamprecht & Stamm) — CHF 13.90–18.80/hr volunteer replacement value"],
             ["🇨🇭", "BFS SAKE 2024 — 590M volunteer hours, 376M informal care hours per year in Switzerland"],
@@ -361,8 +363,8 @@ function App() {
             ["👩‍👧", "ILO 2018 — 16.4B hrs unpaid care daily = 9% of global GDP if valued at minimum wage"],
             ["❤️", "Holt-Lunstad et al., PLOS Medicine 2010 — strong social ties = 50% better survival odds"],
           ].map(([icon, text], i) => (
-            <div key={i} style={{ display: "flex", gap: 6, fontSize: 10, color: "#2e2e2e",
-              lineHeight: 1.6, marginBottom: 3, paddingLeft: 6, borderLeft: "1px solid #1e1e1e" }}>
+            <div key={i} style={{ display: "flex", gap: 8, fontSize: 12, color: "#2e2e2e",
+              lineHeight: 1.6, marginBottom: 5, paddingLeft: 8, borderLeft: "1px solid #1e1e1e" }}>
               <span style={{ opacity: 0.6 }}>{icon}</span><span>{text}</span>
             </div>
           ))}
