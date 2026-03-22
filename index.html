@@ -312,13 +312,13 @@ function App() {
                       {val > 0 ? val : "—"}
                     </div>
                   </div>
-                  <div style={{ position: "relative", height: 5, background: "#1a1a1a", borderRadius: 99 }}>
+                  <div style={{ position: "relative", height: 10, background: "#1a1a1a", borderRadius: 99 }}>
                     <div style={{ position: "absolute", top: 0, left: 0, height: "100%", width: `${pct}%`, borderRadius: 99,
                       background: `linear-gradient(90deg, ${activeCat.color}55, ${activeCat.color})`,
                       transition: "width 0.4s cubic-bezier(.4,0,.2,1)" }} />
                     {act.benchmarks && act.benchmarks.map((bm, bi) => (
                       <div key={bi} style={{ position: "absolute", left: `${(bm.v / act.max) * 100}%`, top: -2,
-                        width: 1, height: 9, background: val >= bm.v ? activeCat.color + "88" : "#444",
+                        width: 2, height: 14, background: val >= bm.v ? activeCat.color + "88" : "#444",
                         transition: "background 0.3s" }} />
                     ))}
                   </div>
